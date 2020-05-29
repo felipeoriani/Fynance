@@ -1,4 +1,8 @@
-<h1 align="center">Fynance</h1>
+<div align="center">
+
+![Fynance](logo.png)
+
+</div>
 
 <div align="center">
 
