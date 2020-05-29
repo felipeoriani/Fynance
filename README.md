@@ -13,6 +13,30 @@
 
 </div>
 
-Fynance is a handy wrapper to get stock market quotes written in .Net. 
+Fynance is a handy wrapper to get stock market quotes written in .Net. It is currently support the Yahoo Finance but it can be extended to other APIs.
+
+## Features
+
+- Get Security Info
+- Get Quotes 
+- Get Events
+ - Get Dividends
+ - Get Splits
+
+Add the `Fynance` namespace:
+
+```
+using Fynance;
+```
+
+Then you can build an instance of `Ticker` and use it with fluent implementation uintil call the `Get` or `GetAsync` method.
+
+```
+var result = await Ticker.Build()
+                         .SetSymbol("MSFT")
+                         .SetPeriod(Period.OneMonth)
+                         .SetInterval(Interval.OneDay)
+                         .GetAsync();
+```
 
 Collab of @FelipeOriani and @EduVencovsky

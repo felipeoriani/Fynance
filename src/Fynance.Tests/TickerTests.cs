@@ -91,13 +91,13 @@ namespace Fynance.Tests
         [TestMethod]
         public void Should_define_a_time_zone()
         {
-            var gmtZone = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+            var localTimeZone = TimeZoneInfo.Local;
 
             var result = Ticker.Build()
-                                .SetTimeZone(gmtZone);
+                                .SetTimeZone(localTimeZone);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.TimeZone, gmtZone);
+            Assert.AreEqual(result.TimeZone, localTimeZone);
         }
 
         [TestMethod]
