@@ -30,6 +30,6 @@ jobs:
     - name: Install dependencies
       run: cd ./src && dotnet restore
     - name: Build
-      run: cd ./src && dotnet build --configuration Release --no-restore:  
+      run: cd ./src && dotnet build --configuration Release --no-restore
     - name: Test
       run: cd ./src && dotnet test --no-restore --verbosity normal
