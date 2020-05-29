@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <Authors>Felipe O</Authors>
+    <Company>Community</Company>
+    <Description>Fynance is a wrapper for stack market data based on .Net Standard 2.1. It is current working with Yahoo Finance but new providers can be added in the next versions.</Description>
+    <Copyright></Copyright>
+    <PackageIcon>logo.png</PackageIcon>
+    <RepositoryUrl>https://github.com/felipeoriani/fynance</RepositoryUrl>
+    <PackageTags>fynance stock market data yahoo finance financial exchange security trading trade trader</PackageTags>
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

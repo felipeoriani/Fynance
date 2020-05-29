@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fynance.Tests", "Fynance.Tests\Fynance.Tests.csproj", "{B9F984B8-2F82-47CD-8A54-DD2F0C80088B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fynance", "Fynance\Fynance.csproj", "{9F4AA5C0-DB6F-4F03-B3E1-1C2D9EE53473}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5578191B-E3C4-4600-AFB2-6CD742EEFBB6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A7EA8ED8-1599-48FB-AD88-100125620512}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9F984B8-2F82-47CD-8A54-DD2F0C80088B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F984B8-2F82-47CD-8A54-DD2F0C80088B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F984B8-2F82-47CD-8A54-DD2F0C80088B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F984B8-2F82-47CD-8A54-DD2F0C80088B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F4AA5C0-DB6F-4F03-B3E1-1C2D9EE53473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F4AA5C0-DB6F-4F03-B3E1-1C2D9EE53473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F4AA5C0-DB6F-4F03-B3E1-1C2D9EE53473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F4AA5C0-DB6F-4F03-B3E1-1C2D9EE53473}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9F984B8-2F82-47CD-8A54-DD2F0C80088B} = {A7EA8ED8-1599-48FB-AD88-100125620512}
+		{9F4AA5C0-DB6F-4F03-B3E1-1C2D9EE53473} = {5578191B-E3C4-4600-AFB2-6CD742EEFBB6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {28B77D95-2895-418F-8A47-99C3CA2AE898}
+	EndGlobalSection
+EndGlobal
