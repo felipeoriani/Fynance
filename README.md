@@ -1,6 +1,6 @@
 <div align="center">
 
-![Fynance](logo.png)
+![Fynance](https://raw.githubusercontent.com/felipeoriani/Fynance/master/logo.png)
 
 </div>
 
