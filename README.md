@@ -13,7 +13,7 @@
 
 </div>
 
-Fynance is a handy wrapper to get stock market quotes written in .Net. It is currently support the Yahoo Finance but it can be extended to other APIs.
+Fynance is a handy wrapper to get stock market quotes written in .Net Standard. It is currently support the Yahoo Finance but it can be extended to other APIs.
 
 ## Features
 
