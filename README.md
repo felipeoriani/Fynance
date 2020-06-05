@@ -30,15 +30,15 @@ To update the package to the last version use the following nuget statement:
 Update-Package Fynance
 ``` 
 
-## Features
+## Fynance Examples
+
+What data you can get with `Fynance`:
 
 - Get Security Info
 - Get Quotes 
 - Get Events
   - Get Dividends
   - Get Splits
-
-## Fynance Examples
 
 #### General Usage 
 
