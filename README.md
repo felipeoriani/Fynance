@@ -15,6 +15,14 @@
 
 Fynance is a handy wrapper to get stock market quotes written in .Net Standard. It is currently support the Yahoo Finance but it can be extended to other APIs.
 
+## Installation - Nuget Package
+
+This is available on [nuget package.](https://www.nuget.org/packages/Fynance).
+
+```
+Install-Package Fynance
+```
+
 ## Features
 
 - Get Security Info
