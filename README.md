@@ -38,7 +38,9 @@ Update-Package Fynance
   - Get Dividends
   - Get Splits
 
-### Samples
+## Fynance Examples
+
+#### General Usage 
 
 First you have to add the `Fynance` namespace to make the types available on your code:
 
@@ -58,7 +60,7 @@ var result = await Ticker.Build()
 
 The `Build` method instance the `Ticker` object and all these `Set` methods configure what information you want to get from the available APIs.
 
-To the the * events* as we call *dividends* or *splits* you can use `SetDividends` and `SetEvents` to define it:
+To the the *events* as we call *dividends* or *splits* you can use `SetDividends` and `SetEvents` to define it:
 ```
 var result = await Ticker.Build()
                          .SetSymbol("MSFT")
@@ -68,6 +70,58 @@ var result = await Ticker.Build()
                          .SetEvents(true)
                          .GetAsync();
 ```
+
+Alternatively, you can use the method `.SetEvents(true)` and it will set `Dividends` and `Splits`.
+
+When you call the `Get` methods, you get a instance of `FyResult`. It contains all the data following the methods configured over the `Ticker`. The `FyResult` can contain all the information from the *Security*, the *OLHC* history, dividends and splits.
+
+##### Results
+
+There are many information you can read from the security, see some samples available:
+
+```
+var currenty = result.Currency;
+var symbol = result.Symbol;
+var symbol = result.ExchangeName;
+```
+   
+Reading all the *OLHC* history:
+
+```
+foreach (var item in result.Quotes)
+{
+   var period = item.Period; // DateTime
+   var open = item.Open; // Double 
+   var low = item.Low; // Double 
+   var high = item.High; // Double 
+   var close = item.Close; // Double 
+   var close = item.Close; // Double 
+   var adjClose = item.AdjClose; // Double 
+   var volume = item.Volume; // Double 
+}
+```
+
+Reading the dividends:
+
+```
+foreach (var item in result.Dividends)
+{
+   var date = item.Date; // DateTime: Payment date 
+   var value = item.value; // Double: Payment value
+}
+```
+
+Reading the splits:
+
+```
+foreach (var item in result.Splits)
+{
+   var date = item.Date; // DateTime: Date 
+   var numerator = item.Numberator; // Double: Numerator of splits
+   var denominator = item.Denominator; // Double: Denominator of split
+}
+```
+
 
 ### Issue Reports
 
