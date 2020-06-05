@@ -8,6 +8,7 @@
 
 [![Build Status](https://img.shields.io/github/workflow/status/felipeoriani/Fynance/Build)](https://img.shields.io/github/workflow/status/felipeoriani/Fynance/Build)
 [![NuGet](https://img.shields.io/nuget/v/fynance.svg)](https://www.nuget.org/packages/Fynance)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Fynance.svg)](https://www.nuget.org/packages/Fynance)
 [![GitHub Stars](https://img.shields.io/github/stars/felipeoriani/fynance.svg)](https://github.com/felipeoriani/fynance/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/felipeoriani/fynance.svg)](https://github.com/felipeoriani/fynance/issues)
 [![Apache License](https://img.shields.io/github/license/felipeoriani/fynance.svg)](LICENSE)
