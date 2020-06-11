@@ -81,6 +81,7 @@ namespace Fynance
         public virtual Ticker SetPeriod(Period period)
         {
             this.Period = period;
+            this.StartDate = this.FinishDate = null;
             return this;
         }
 
@@ -95,12 +96,14 @@ namespace Fynance
 
         public virtual Ticker SetStartDate(DateTime startDate)
         {
+            this.Period = Period.Custom;
             this.StartDate = startDate;
             return this;
         }
 
         public virtual Ticker SetFinishDate(DateTime finishDate)
         {
+            this.Period = Period.Custom;
             this.FinishDate = finishDate;
             return this;
         }

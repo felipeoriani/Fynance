@@ -45,10 +45,9 @@ namespace Fynance.Yahoo
                 case "5y": return Period.FiveYears;
                 case "10y": return Period.TenYears;
                 case "ytd": return Period.YearToDate;
-                case "max": return Period.Max;                
+                case "max": return Period.Max;
+                default: return Period.Custom;
             }
-
-            throw new ArgumentOutOfRangeException("period", "There is not period defined for the value");
         }
 
         public static string GetInterval(Interval? interval = null)

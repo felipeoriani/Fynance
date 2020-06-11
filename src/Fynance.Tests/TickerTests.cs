@@ -13,7 +13,32 @@ namespace Fynance.Tests
 
             var ticker = Ticker.Build()
                                 .SetSymbol(symbol)
-                                .SetPeriod(Period.FiveYears)
+                                .SetPeriod(Period.OneYear)
+                                .SetInterval(Interval.OneDay)
+                                .SetEvents(true);
+
+            var result = ticker.Get();
+
+            Assert.IsNotNull(ticker.Result);
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(result.Symbol, symbol);
+
+            Assert.IsNotNull(result.Quotes);
+            Assert.IsTrue(result.Quotes.Length > 0);
+
+            Assert.IsNotNull(result.Dividends);
+        }
+
+        [TestMethod]
+        public void Should_download_ticker_data_from_yahoo_finance_by_start_finish_date()
+        {
+            const string symbol = "ABEV3.SA";
+
+            var ticker = Ticker.Build()
+                                .SetSymbol(symbol)
+                                .SetStartDate(new DateTime(2019, 1, 1))
+                                .SetFinishDate(new DateTime(2020, 12, 1))
                                 .SetInterval(Interval.OneDay)
                                 .SetEvents(true);
 

@@ -15,6 +15,7 @@
         FiveYears,
         TenYears,
         YearToDate,
-        Max
+        Max,
+        Custom
     }
 }
