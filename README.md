@@ -12,6 +12,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/felipeoriani/fynance.svg)](https://github.com/felipeoriani/fynance/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/felipeoriani/fynance.svg)](https://github.com/felipeoriani/fynance/issues)
 [![Apache License](https://img.shields.io/github/license/felipeoriani/fynance.svg)](LICENSE)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BRLZR87XSBQT8&source=url)
 
 </div>
 
@@ -137,3 +138,7 @@ This software is distributed under the terms of the *Apache License 2.0*. Please
 This project is a collab of [@FelipeOriani](https://github.com/felipeoriani/) and [@EduVencovsky](https://github.com/eduvencovsky/).
 
 Many thanks for the [Newtonsoft.Json](https://www.newtonsoft.com/json) packaged used as a dependency of this project.
+
+If you wanna colaborate with this project or it was useful to you, make a donate:
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BRLZR87XSBQT8&source=url)
