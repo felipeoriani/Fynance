@@ -12,7 +12,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/felipeoriani/fynance.svg)](https://github.com/felipeoriani/fynance/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/felipeoriani/fynance.svg)](https://github.com/felipeoriani/fynance/issues)
 [![Apache License](https://img.shields.io/github/license/felipeoriani/fynance.svg)](LICENSE)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BRLZR87XSBQT8&source=url)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BRLZR87XSBQT8&source=url)
 
 </div>
 
