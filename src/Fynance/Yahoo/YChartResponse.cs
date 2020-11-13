@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Fynance.Yahoo
 {
     internal class YChartResponse
     {
-        public IList<YResultResponse> result { get; set; }
+        [JsonProperty("result")]
+        public IList<YResultResponse> Result { get; set; }
 
-        public YErrorResponse error { get; set; }
+        [JsonProperty("error")] 
+        public YErrorResponse Error { get; set; }
     }
 }

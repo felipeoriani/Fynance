@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Fynance.Yahoo
 {
     internal class YResultResponse
     {
-        public YMetaResponse meta { get; set; }
-        
-        public IList<double?> timestamp { get; set; }
-        
-        public YIndicatorResponse indicators { get; set; }
+        [JsonProperty("meta")]
+        public YMetaResponse Meta { get; set; }
 
-        public YEventResponse events { get; set; }
+        [JsonProperty("timestamp")] 
+        public IList<double?> TimeStamp { get; set; }
+
+        [JsonProperty("indicators")] 
+        public YIndicatorResponse Indicators { get; set; }
+
+        [JsonProperty("events")] 
+        public YEventResponse Events { get; set; }
     }
 }

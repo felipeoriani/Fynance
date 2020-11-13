@@ -1,11 +1,16 @@
-﻿namespace Fynance.Yahoo
+﻿using Newtonsoft.Json;
+
+namespace Fynance.Yahoo
 {
     internal class YCurrentTradingPeriodResponse
     {
-        public YPreResponse pre { get; set; }
+        [JsonProperty("pre")]
+        public YPeriodResponse Pre { get; set; }
 
-        public YRegularResponse regular { get; set; }
+        [JsonProperty("regular")]
+        public YPeriodResponse Regular { get; set; }
 
-        public YPostResponse post { get; set; }
+        [JsonProperty("post")]
+        public YPeriodResponse Post { get; set; }
     }
 }

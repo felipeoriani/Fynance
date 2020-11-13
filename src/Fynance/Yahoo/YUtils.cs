@@ -95,6 +95,9 @@ namespace Fynance.Yahoo
         public static DateTime GetDateFromTimestamp(double timestamp)
         => DefaultDateTime.AddSeconds(timestamp);
 
+        public static DateTime? GetDateFromTimestamp(double? timestamp)
+        => timestamp.HasValue ? DefaultDateTime.AddSeconds(timestamp.Value) as DateTime? : null;
+
         public static DateTime GetDateFromTimestamp(double timestamp, TimeZoneInfo timeZone = null)
         => timeZone != null ? GetDateFromTimestamp(timestamp).Add(timeZone.BaseUtcOffset) : GetDateFromTimestamp(timestamp);
 
@@ -109,23 +112,23 @@ namespace Fynance.Yahoo
         /// <returns></returns>
         public static FyQuote[] GetQuotes(this YResultResponse resultResponse, TimeZoneInfo timeZone = null)
         {
-            var ohlc = resultResponse.indicators.quote.First();
+            var ohlc = resultResponse.Indicators.Quote.First();
 
-            var timestamps = resultResponse.timestamp;
+            var timestamps = resultResponse.TimeStamp;
             var dateTimes = timestamps.Select(x => x.HasValue ? GetDateFromTimestamp(x.Value) : null as DateTime?).ToList();
 
-            var adjClose = resultResponse.indicators.adjclose?.FirstOrDefault()?.adjclose ?? ohlc.close;
+            var adjClose = resultResponse.Indicators.AdjClose?.FirstOrDefault()?.AdjClose ?? ohlc.Close;
 
             var quotes = new List<FyQuote>();
             for (int i = 0; i < dateTimes.Count; i++)
             {
                 if (dateTimes[i] == null ||
-                    ohlc.low[i] == null ||
-                    ohlc.open[i] == null ||
-                    ohlc.high[i] == null ||
-                    ohlc.close[i] == null ||
+                    ohlc.Low[i] == null ||
+                    ohlc.Open[i] == null ||
+                    ohlc.High[i] == null ||
+                    ohlc.Close[i] == null ||
                     adjClose[i] == null ||
-                    ohlc.volume[i] == null)
+                    ohlc.Volume[i] == null)
                     continue;
 
                 DateTime period = dateTimes[i].Value;
@@ -135,12 +138,12 @@ namespace Fynance.Yahoo
                 quotes.Add(new FyQuote()
                 {
                     Period = period,
-                    Low = ohlc.low[i].Value,
-                    Open = ohlc.open[i].Value,
-                    High = ohlc.high[i].Value,
-                    Close = ohlc.close[i].Value,
+                    Low = ohlc.Low[i].Value,
+                    Open = ohlc.Open[i].Value,
+                    High = ohlc.High[i].Value,
+                    Close = ohlc.Close[i].Value,
                     AdjClose = adjClose[i].Value,
-                    Volume = ohlc.volume[i].Value
+                    Volume = ohlc.Volume[i].Value
                 });
             }
 
@@ -154,13 +157,13 @@ namespace Fynance.Yahoo
         /// <param name="timeZone"></param>
         /// <returns></returns>
         public static FyDividend[] GetDividends(this YResultResponse resultResponse, TimeZoneInfo timeZone = null)
-        => resultResponse?.events?
-                          .dividends?
+        => resultResponse?.Events?
+                          .Dividends?
                           .Values
                           .Select(x => new FyDividend()
                           {
-                              Date = GetDateFromTimestamp(x.date, timeZone),
-                              Value = x.amount
+                              Date = GetDateFromTimestamp(x.Date, timeZone),
+                              Value = x.Amount
                           }).ToArray();
 
         /// <summary>
@@ -170,15 +173,15 @@ namespace Fynance.Yahoo
         /// <param name="timeZone"></param>
         /// <returns></returns>
         public static FySplit[] GetSplits(this YResultResponse resultResponse, TimeZoneInfo timeZone = null)
-        => resultResponse?.events?
-                          .splits?
+        => resultResponse?.Events?
+                          .Splits?
                           .Values
                           .Select(x => new FySplit()
                           {
-                              Date = GetDateFromTimestamp(x.date, timeZone),
-                              Denominator = x.denominator,
-                              Numberator = x.numerator,
-                              Ratio = x.splitRatio
+                              Date = GetDateFromTimestamp(x.Date, timeZone),
+                              Denominator = x.Denominator,
+                              Numberator = x.Numerator,
+                              Ratio = x.SplitRatio
                           }).ToArray();
 
         /// <summary>
@@ -189,32 +192,32 @@ namespace Fynance.Yahoo
         /// <returns></returns>
         public static FyResult GetResult(this YResponse yResponse, TimeZoneInfo timeZone = null)
         {
-            var resultResponse = yResponse?.chart?.result?.FirstOrDefault();
+            var resultResponse = yResponse?.Chart?.Result?.FirstOrDefault();
 
             if (resultResponse == null)
                 return null;
 
-            var meta = resultResponse.meta;
+            var meta = resultResponse.Meta;
 
             var result = new FyResult()
             {
-                Currency = meta.currency,
-                Symbol = meta.symbol,
-                ExchangeName = meta.exchangeName,
-                InstrumentType = meta.instrumentType,
-                FirstTradeDate = GetDateFromTimestamp(meta.firstTradeDate),
-                RegularMarketTime = GetDateFromTimestamp(meta.regularMarketTime),
-                GMTOffSet = meta.gmtoffset,
-                TimeZone = meta.timezone,
-                ExchangeTimezoneName = meta.exchangeName,
-                RegularMarketPrice = meta.regularMarketPrice,
-                ChartPreviousClose = meta.chartPreviousClose,
-                PreviousClose = meta.previousClose,
-                Scale = meta.scale,
-                PriceHint = meta.priceHint,
-                DataGranularity = GetInterval(meta.dataGranularity),
-                Range = GetPeriod(meta.range),
-                ValidRanges = meta.validRanges.Select(GetPeriod).ToArray(),
+                Currency = meta.Currency,
+                Symbol = meta.Symbol,
+                ExchangeName = meta.ExchangeName,
+                InstrumentType = meta.InstrumentType,
+                FirstTradeDate = GetDateFromTimestamp(meta.FirstTradeDate),
+                RegularMarketTime = GetDateFromTimestamp(meta.RegularMarketTime),
+                GMTOffSet = meta.GMTOffSet,
+                TimeZone = meta.TimeZone,
+                ExchangeTimezoneName = meta.ExchangeName,
+                RegularMarketPrice = meta.RegularMarketPrice,
+                ChartPreviousClose = meta.ChartPreviousClose,
+                PreviousClose = meta.PreviousClose,
+                Scale = meta.Scale,
+                PriceHint = meta.PriceHint,
+                DataGranularity = GetInterval(meta.DataGranularity),
+                Range = GetPeriod(meta.Range),
+                ValidRanges = meta.ValidRanges.Select(GetPeriod).ToArray(),
                 Quotes = resultResponse.GetQuotes(timeZone),
                 Dividends = resultResponse.GetDividends(timeZone),
                 Splits = resultResponse.GetSplits(timeZone)

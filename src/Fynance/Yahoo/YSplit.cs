@@ -1,13 +1,19 @@
-﻿namespace Fynance.Yahoo
+﻿using Newtonsoft.Json;
+
+namespace Fynance.Yahoo
 {
     internal class YSplitResponse
     {
-        public double date { get; set; }
+        [JsonProperty("date")] 
+        public double Date { get; set; }
 
-        public double numerator { get; set; }
+        [JsonProperty("numerator")]
+        public double Numerator { get; set; }
 
-        public double denominator { get; set; }
+        [JsonProperty("denominator")] 
+        public double Denominator { get; set; }
 
-        public string splitRatio { get; set; }
+        [JsonProperty("splitRatio")]
+        public string SplitRatio { get; set; }
     }
 }

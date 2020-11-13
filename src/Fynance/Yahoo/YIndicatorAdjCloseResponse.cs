@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Fynance.Yahoo
 {
     internal class YIndicatorAdjCloseResponse
     {
-        public IList<double?> adjclose { get; set; }
+        [JsonProperty("adjclose")]
+        public IList<double?> AdjClose { get; set; }
     }
 }

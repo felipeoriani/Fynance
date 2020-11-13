@@ -1,7 +1,10 @@
-﻿namespace Fynance.Yahoo
+﻿using Newtonsoft.Json;
+
+namespace Fynance.Yahoo
 {
     internal class YResponse
     {
-        public YChartResponse chart { get; set; }
+        [JsonProperty("chart")]
+        public YChartResponse Chart { get; set; }
     }
 }

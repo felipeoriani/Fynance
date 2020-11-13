@@ -12,9 +12,9 @@ namespace Fynance.Result
 
         public string InstrumentType { get; set; }
 
-        public DateTime FirstTradeDate { get; set; }
+        public DateTime? FirstTradeDate { get; set; }
 
-        public DateTime RegularMarketTime { get; set; }
+        public DateTime? RegularMarketTime { get; set; }
 
         public int GMTOffSet { get; set; }
 
@@ -30,7 +30,7 @@ namespace Fynance.Result
 
         public int Scale { get; set; }
 
-        public int PriceHint { get; set; }
+        public double PriceHint { get; set; }
 
         public Interval DataGranularity { get; set; }
 

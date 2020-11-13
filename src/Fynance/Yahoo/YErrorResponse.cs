@@ -1,9 +1,13 @@
-﻿namespace Fynance.Yahoo
+﻿using Newtonsoft.Json;
+
+namespace Fynance.Yahoo
 {
     internal class YErrorResponse
     {
-        public string code { get; set; }
+        [JsonProperty("code")]
+        public string Code { get; set; }
 
-        public string description { get; set; }
+        [JsonProperty("description")]
+        public string Description { get; set; }
     }
 }

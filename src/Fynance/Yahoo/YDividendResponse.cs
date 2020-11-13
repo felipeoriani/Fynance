@@ -1,9 +1,13 @@
-﻿namespace Fynance.Yahoo
+﻿using Newtonsoft.Json;
+
+namespace Fynance.Yahoo
 {
     internal class YDividendResponse
     {
-        public double amount { get; set; }
+        [JsonProperty("amount")]
+        public double Amount { get; set; }
 
-        public double date { get; set; }
+        [JsonProperty("date")]
+        public double Date { get; set; }
     }
 }

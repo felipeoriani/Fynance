@@ -103,15 +103,15 @@ namespace Fynance
 
             if (!response.IsSuccessStatusCode || yResponse == null)
             {
-                var error = yResponse?.chart?.error;
+                var error = yResponse?.Chart?.Error;
 
                 string code = "Fynance.Yahoo";
                 string message = "This result was not possible to get from Yahoo Finance.";
 
                 if (error != null)
                 {
-                    code = error.code;
-                    message = error.description;
+                    code = error.Code;
+                    message = error.Description;
                 }
 
                 throw new FynanceException(code, message)

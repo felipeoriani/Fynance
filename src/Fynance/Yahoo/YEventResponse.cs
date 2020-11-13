@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Fynance.Yahoo
 {
     internal class YEventResponse
     {
-        public Dictionary<double, YDividendResponse> dividends { get; set; }
+        [JsonProperty("dividends")]
+        public Dictionary<double, YDividendResponse> Dividends { get; set; }
 
-        public Dictionary<double, YSplitResponse> splits { get; set; }
+        [JsonProperty("splits")]
+        public Dictionary<double, YSplitResponse> Splits { get; set; }
     }
 }
