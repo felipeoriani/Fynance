@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Fynance.Yahoo;
-using Fynance.Result;
-
-namespace Fynance.Yahoo
+﻿namespace Fynance.Yahoo
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using Result;
+
 	internal static class YUtils
 	{
 		public const string BaseUrl = "https://query1.finance.yahoo.com";
@@ -93,16 +92,16 @@ namespace Fynance.Yahoo
 		}
 
 		public static DateTime GetDateFromTimestamp(double timestamp)
-		=> DefaultDateTime.AddSeconds(timestamp);
+			=> DefaultDateTime.AddSeconds(timestamp);
 
 		public static DateTime? GetDateFromTimestamp(double? timestamp)
-		=> timestamp.HasValue ? DefaultDateTime.AddSeconds(timestamp.Value) as DateTime? : null;
+			=> timestamp.HasValue ? DefaultDateTime.AddSeconds(timestamp.Value) as DateTime? : null;
 
 		public static DateTime GetDateFromTimestamp(double timestamp, TimeZoneInfo timeZone = null)
-		=> timeZone != null ? GetDateFromTimestamp(timestamp).Add(timeZone.BaseUtcOffset) : GetDateFromTimestamp(timestamp);
+			=> timeZone != null ? GetDateFromTimestamp(timestamp).Add(timeZone.BaseUtcOffset) : GetDateFromTimestamp(timestamp);
 
 		public static double GetTimestampFromDateTime(DateTime dateTime)
-		=> dateTime.Subtract(DefaultDateTime).TotalSeconds;
+			=> dateTime.Subtract(DefaultDateTime).TotalSeconds;
 
 		/// <summary>
 		/// Prepare the splits from YResponse.
@@ -157,14 +156,14 @@ namespace Fynance.Yahoo
 		/// <param name="timeZone"></param>
 		/// <returns></returns>
 		public static FyDividend[] GetDividends(this YResultResponse resultResponse, TimeZoneInfo timeZone = null)
-		=> resultResponse?.Events?
-						  .Dividends?
-						  .Values
-						  .Select(x => new FyDividend()
-						  {
-							  Date = GetDateFromTimestamp(x.Date, timeZone),
-							  Value = x.Amount
-						  }).ToArray();
+			=> resultResponse?.Events?
+							.Dividends?
+							.Values
+							.Select(x => new FyDividend()
+							{
+								Date = GetDateFromTimestamp(x.Date, timeZone),
+								Value = x.Amount
+							}).ToArray();
 
 		/// <summary>
 		/// Prepare the splits from YResponse.
@@ -173,7 +172,7 @@ namespace Fynance.Yahoo
 		/// <param name="timeZone"></param>
 		/// <returns></returns>
 		public static FySplit[] GetSplits(this YResultResponse resultResponse, TimeZoneInfo timeZone = null)
-		=> resultResponse?.Events?
+			=> resultResponse?.Events?
 						  .Splits?
 						  .Values
 						  .Select(x => new FySplit()

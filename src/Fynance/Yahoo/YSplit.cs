@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-
-namespace Fynance.Yahoo
+﻿namespace Fynance.Yahoo
 {
+	using Newtonsoft.Json;
+
 	internal class YSplitResponse
 	{
 		[JsonProperty("date")]

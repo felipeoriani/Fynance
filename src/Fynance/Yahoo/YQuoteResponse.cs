@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-
-namespace Fynance.Yahoo
+﻿namespace Fynance.Yahoo
 {
+	using Newtonsoft.Json;
+	using System.Collections.Generic;
+
 	internal class YQuoteResponse
 	{
 		[JsonProperty("open")]

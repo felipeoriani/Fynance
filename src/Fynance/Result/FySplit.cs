@@ -1,7 +1,10 @@
-﻿using System;
-
-namespace Fynance.Result
+﻿namespace Fynance.Result
 {
+	using System;
+
+	/// <summary>
+	/// Representation of a slipt event.
+	/// </summary>
 	public class FySplit
 	{
 		public DateTime Date { get; set; }

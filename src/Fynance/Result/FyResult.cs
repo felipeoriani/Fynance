@@ -1,7 +1,10 @@
-﻿using System;
-
-namespace Fynance.Result
+﻿namespace Fynance.Result
 {
+	using System;
+
+	/// <summary>
+	/// Result representation.
+	/// </summary>
 	public class FyResult
 	{
 		public string Currency { get; set; }
@@ -42,49 +45,33 @@ namespace Fynance.Result
 
 		public FyDividend[] Dividends { get; set; }
 
-        public FySplit[] Splits { get; set; }
-        
-        public void Clear()
-        {
-            this.Currency = null;
+		public FySplit[] Splits { get; set; }
 
-            this.Symbol = null;
-
-            this.ExchangeName = null;
-
-            this.InstrumentType = null;
-
-            this.FirstTradeDate = null;
-
-            this.RegularMarketTime = null;
-
-            this.GMTOffSet = new int();
-
-            this.TimeZone = null;
-
-            this.ExchangeTimezoneName = null;
-
-            this.RegularMarketPrice = new double();
-
-            this.ChartPreviousClose = new double();
-
-            this.PreviousClose = new double();
-
-            this.Scale = new int();
-
-            this.PriceHint = new double();
-
-            this.DataGranularity = new Interval();
-
-            this.Range = new Period();
-
-            this.ValidRanges = null;
-
-            this.Quotes = null;
-
-            this.Dividends = null;
-
-            this.Splits = null;
-        }
-    }
+		/// <summary>
+		/// Clear all the setting them to the default value.
+		/// </summary>
+		public void Clear()
+		{
+			this.Currency = null;
+			this.Symbol = null;
+			this.ExchangeName = null;
+			this.InstrumentType = null;
+			this.FirstTradeDate = null;
+			this.RegularMarketTime = null;
+			this.GMTOffSet = default;
+			this.TimeZone = null;
+			this.ExchangeTimezoneName = null;
+			this.RegularMarketPrice = default;
+			this.ChartPreviousClose = default;
+			this.PreviousClose = default;
+			this.Scale = default;
+			this.PriceHint = default;
+			this.DataGranularity = default;
+			this.Range = default;
+			this.ValidRanges = null;
+			this.Quotes = null;
+			this.Dividends = null;
+			this.Splits = null;
+		}
+	}
 }

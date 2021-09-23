@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Fynance
+﻿namespace Fynance
 {
+	using System;
+	using System.Threading;
+	using System.Threading.Tasks;
 	using Result;
 
 	/// <summary>
@@ -12,7 +12,7 @@ namespace Fynance
 	/// </summary>
 	public abstract class Ticker
 	{
-		#region [Properties]
+		#region Properties
 
 		/// <summary>
 		/// Security symbol.
@@ -61,6 +61,8 @@ namespace Fynance
 
 		#endregion
 
+		#region Construtors
+
 		protected Ticker() { }
 
 		protected Ticker(string symbol)
@@ -70,14 +72,26 @@ namespace Fynance
 				.SetInterval(Interval.OneDay);
 		}
 
-		#region [Methods]
+		#endregion
 
+		#region Methods
+
+		/// <summary>
+		/// Set a symbol (ticker) of a security.
+		/// </summary>
+		/// <param name="ticker">Symbol.</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetSymbol(string ticker)
 		{
 			this.Symbol = ticker;
 			return this;
 		}
 
+		/// <summary>
+		/// Set a Period to get data.
+		/// </summary>
+		/// <param name="period">Period.</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetPeriod(Period period)
 		{
 			this.Period = period;
@@ -85,15 +99,31 @@ namespace Fynance
 			return this;
 		}
 
+		/// <summary>
+		/// Set the interval of the data.
+		/// </summary>
+		/// <param name="interval">Interval.</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetInterval(Interval interval)
 		{
 			this.Interval = interval;
 			return this;
 		}
 
+		/// <summary>
+		/// Set interval between two dates.
+		/// </summary>
+		/// <param name="startDate">Start date.</param>
+		/// <param name="finishDate">Finish date.</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetInterval(DateTime startDate, DateTime finishDate)
 			=> SetStartDate(startDate).SetFinishDate(finishDate);
 
+		/// <summary>
+		/// Set the start date. 
+		/// </summary>
+		/// <param name="startDate">Start date.</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetStartDate(DateTime startDate)
 		{
 			this.Period = Period.Custom;
@@ -101,6 +131,11 @@ namespace Fynance
 			return this;
 		}
 
+		/// <summary>
+		/// Set the finish date.
+		/// </summary>
+		/// <param name="finishDate">Finish date.</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetFinishDate(DateTime finishDate)
 		{
 			this.Period = Period.Custom;
@@ -108,40 +143,76 @@ namespace Fynance
 			return this;
 		}
 
+		/// <summary>
+		/// Set the local timezone.
+		/// </summary>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetLocalTimeZone()
 			=> SetTimeZone(TimeZoneInfo.Local);
 
+		/// <summary>
+		/// Set a timezone to convert the date/time output.
+		/// </summary>
+		/// <param name="timeZone">Timezone</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetTimeZone(TimeZoneInfo timeZone)
 		{
 			this.TimeZone = timeZone;
 			return this;
 		}
 
+		/// <summary>
+		/// Set if the response should hold dividends.
+		/// </summary>
+		/// <param name="dividends">Dividends flag.</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetDividends(bool dividends)
 		{
 			this.Dividends = dividends;
 			return this;
 		}
 
+		/// <summary>
+		/// Set if the response should hold splits.
+		/// </summary>
+		/// <param name="splits">Splits flag.</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetSplits(bool splits)
 		{
 			this.Splits = splits;
 			return this;
 		}
 
+		/// <summary>
+		/// Set if the response should hold events (Dividends and Splits).
+		/// </summary>
+		/// <param name="events">Events flags</param>
+		/// <returns>The instance itself.</returns>
 		public virtual Ticker SetEvents(bool events)
 			=> SetDividends(events).SetSplits(events);
 
-		public FyResult Get() => GetAsync().Result;
+		public FyResult Get()
+		{
+			return _taskFactory.StartNew(GetAsync).Unwrap().GetAwaiter().GetResult();
+		}
 
 		public abstract Task<FyResult> GetAsync();
 
 		#endregion
+
+		#region Static
 
 		public static Ticker Build() => new YahooTicker();
 
 		public static Ticker Build(string ticker) => new YahooTicker(ticker);
 
 		public static Ticker BuildYahoo(string ticker) => new YahooTicker(ticker);
+
+		private static readonly TaskFactory _taskFactory = new TaskFactory(CancellationToken.None,
+			TaskCreationOptions.None,
+			TaskContinuationOptions.None,
+			TaskScheduler.Default);
+
+		#endregion
 	}
 }

@@ -1,12 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace Fynance
+﻿namespace Fynance
 {
+	using Newtonsoft.Json;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Net.Http;
+	using System.Threading.Tasks;
 	using Yahoo;
 	using Result;
 
@@ -30,8 +29,65 @@ namespace Fynance
 
 		public override async Task<FyResult> GetAsync()
 		{
-			Result = null;
+			var queryString = GetQueryStringParameters();
 
+			var url = $"{YUtils.BaseUrl}/v8/finance/chart/{Symbol}?{queryString}";
+
+			HttpResponseMessage response = await GetResponse(url).ConfigureAwait(false);
+
+			string responseBody = null;
+			if (response.IsSuccessStatusCode)
+				responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+			
+			YResponse yResponse = null;
+
+			if (!string.IsNullOrWhiteSpace(responseBody))
+				yResponse = JsonConvert.DeserializeObject<YResponse>(responseBody);
+
+			if (!response.IsSuccessStatusCode || yResponse == null)
+			{
+				var error = yResponse?.Chart?.Error;
+
+				string code = "Fynance.Yahoo";
+				string message = "This result was not possible to get from Yahoo Finance.";
+
+				if (error != null)
+				{
+					code = error.Code;
+					message = error.Description;
+				}
+
+				throw new FynanceException(code, message)
+				{
+					Symbol = this.Symbol,
+					Period = this.Period,
+					Interval = this.Interval,
+					StatusCode = response.StatusCode
+				};
+			}
+
+			try
+			{
+				Result = yResponse.GetResult(this.TimeZone);
+			}
+			catch (Exception ex)
+			{
+				throw new FynanceException("Fynance.Yahoo", "An error occurred while trying to fetch the results. Please, check the InnerException for more details.", ex);
+			}
+
+			return Result;
+		}
+
+		private async Task<HttpResponseMessage> GetResponse(string url)
+		{
+			using (var http = new HttpClient())
+			{
+				return await http.GetAsync(url).ConfigureAwait(false);
+			}
+		}
+
+		private string GetQueryStringParameters()
+		{
 			var queryStringParameters = new Dictionary<string, object>();
 
 			// If there are definitions for 'StartDate' or 'FinishDate' then use it as arguments.
@@ -72,7 +128,6 @@ namespace Fynance
 
 			// Use the interval parameter.
 			queryStringParameters.Add(nameof(interval), interval);
-			// queryStringParameters.Add("includePrePost", false);
 
 			var events = new List<string>();
 
@@ -87,52 +142,7 @@ namespace Fynance
 			// build the queryString parameters.
 			var queryString = string.Join("&", queryStringParameters.Select(x => $"{x.Key}={x.Value}"));
 
-			// Build the 'url' to request.
-			var url = $"{YUtils.BaseUrl}/v8/finance/chart/{Symbol}?{queryString}";
-
-			// Make a http get request to the url.
-			var http = new HttpClient();
-			var response = await http.GetAsync(url);
-
-			var responseBody = await response.Content.ReadAsStringAsync();
-
-			YResponse yResponse = null;
-
-			if (!string.IsNullOrWhiteSpace(responseBody))
-				yResponse = JsonConvert.DeserializeObject<YResponse>(responseBody);
-
-			if (!response.IsSuccessStatusCode || yResponse == null)
-			{
-				var error = yResponse?.Chart?.Error;
-
-				string code = "Fynance.Yahoo";
-				string message = "This result was not possible to get from Yahoo Finance.";
-
-				if (error != null)
-				{
-					code = error.Code;
-					message = error.Description;
-				}
-
-				throw new FynanceException(code, message)
-				{
-					Symbol = this.Symbol,
-					Period = this.Period,
-					Interval = this.Interval,
-					StatusCode = response.StatusCode
-				};
-			}
-
-			try
-			{
-				Result = yResponse.GetResult(this.TimeZone);
-			}
-			catch (Exception ex)
-			{
-				throw new FynanceException("Fynance.Yahoo", "An error occurred while trying to fetch the results. Please, check the InnerException for more details.", ex);
-			}
-
-			return Result;
+			return queryString;
 		}
 
 		#endregion

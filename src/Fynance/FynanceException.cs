@@ -1,8 +1,8 @@
-﻿using System;
-using System.Net;
-
-namespace Fynance
+﻿namespace Fynance
 {
+	using System;
+	using System.Net;
+
 	public class FynanceException : Exception
 	{
 		public string Code { get; set; }
