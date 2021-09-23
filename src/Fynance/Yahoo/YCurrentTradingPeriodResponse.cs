@@ -2,15 +2,15 @@
 
 namespace Fynance.Yahoo
 {
-    internal class YCurrentTradingPeriodResponse
-    {
-        [JsonProperty("pre")]
-        public YPeriodResponse Pre { get; set; }
+	internal class YCurrentTradingPeriodResponse
+	{
+		[JsonProperty("pre")]
+		public YPeriodResponse Pre { get; set; }
 
-        [JsonProperty("regular")]
-        public YPeriodResponse Regular { get; set; }
+		[JsonProperty("regular")]
+		public YPeriodResponse Regular { get; set; }
 
-        [JsonProperty("post")]
-        public YPeriodResponse Post { get; set; }
-    }
+		[JsonProperty("post")]
+		public YPeriodResponse Post { get; set; }
+	}
 }

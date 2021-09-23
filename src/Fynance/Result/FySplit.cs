@@ -2,14 +2,14 @@
 
 namespace Fynance.Result
 {
-    public class FySplit
-    {
-        public DateTime Date { get; set; }
+	public class FySplit
+	{
+		public DateTime Date { get; set; }
 
-        public double Numberator { get; set; }
+		public decimal Numberator { get; set; }
 
-        public double Denominator { get; set; }
+		public decimal Denominator { get; set; }
 
-        public string Ratio { get; set; }
-    }
+		public string Ratio { get; set; }
+	}
 }

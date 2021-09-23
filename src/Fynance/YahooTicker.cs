@@ -7,134 +7,134 @@ using System.Threading.Tasks;
 
 namespace Fynance
 {
-    using Yahoo;
-    using Result;
-    
-    /// <summary>
-    /// Implementation of Ticker for Yahoo Finance.
-    /// </summary>
-    public class YahooTicker : Ticker
-    {
-        #region [ctor]
+	using Yahoo;
+	using Result;
 
-        public YahooTicker() { }
+	/// <summary>
+	/// Implementation of Ticker for Yahoo Finance.
+	/// </summary>
+	public class YahooTicker : Ticker
+	{
+		#region [ctor]
 
-        public YahooTicker(string symbol)
-            : base(symbol)
-        {
-        }
+		public YahooTicker() { }
 
-        #endregion
+		public YahooTicker(string symbol)
+			: base(symbol)
+		{
+		}
 
-        #region [Methods]
+		#endregion
 
-        public override async Task<FyResult> GetAsync()
-        {
-            Result = null;
+		#region [Methods]
 
-            var queryStringParameters = new Dictionary<string, object>();
+		public override async Task<FyResult> GetAsync()
+		{
+			Result = null;
 
-            // If there are definitions for 'StartDate' or 'FinishDate' then use it as arguments.
-            if (StartDate != null || FinishDate != null)
-            {
-                // Set default timestamp for 'StartDate' when it is not defined.
-                if (StartDate == null)
-                    StartDate = YUtils.DefaultDateTime;
+			var queryStringParameters = new Dictionary<string, object>();
 
-                // Set current datetime for' FinishDate' when it is not defined.
-                if (FinishDate == null)
-                    FinishDate = DateTime.Now;
+			// If there are definitions for 'StartDate' or 'FinishDate' then use it as arguments.
+			if (StartDate != null || FinishDate != null)
+			{
+				// Set default timestamp for 'StartDate' when it is not defined.
+				if (StartDate == null)
+					StartDate = YUtils.DefaultDateTime;
 
-                // Validate the Start/Finish interval.
-                if (StartDate > FinishDate)
-                    throw new ArgumentOutOfRangeException("StartDate", "The StartDate can not be greater than FinishDate.");
+				// Set current datetime for' FinishDate' when it is not defined.
+				if (FinishDate == null)
+					FinishDate = DateTime.Now;
 
-                var period1 = YUtils.GetTimestampFromDateTime(StartDate.Value);
-                var period2 = YUtils.GetTimestampFromDateTime(FinishDate.Value);
+				// Validate the Start/Finish interval.
+				if (StartDate > FinishDate)
+					throw new ArgumentOutOfRangeException("StartDate", "The StartDate can not be greater than FinishDate.");
 
-                // YahooFinance expect two parameters called 'period1' and 'period1' as timeStamps values.
-                queryStringParameters.Add(nameof(period1), period1);
-                queryStringParameters.Add(nameof(period2), period2);
-            }
-            else
-            {
-                // When there is no definition for Start/Finish dates.
-                // We can must use the Period property which is available on the enumerator YPeriod.
-                // Get the valida format for periods.
-                var range = YUtils.GetPeriod(Period);
+				var period1 = YUtils.GetTimestampFromDateTime(StartDate.Value);
+				var period2 = YUtils.GetTimestampFromDateTime(FinishDate.Value);
 
-                // Use the range parameter.
-                queryStringParameters.Add(nameof(range), range);
-            }
+				// YahooFinance expect two parameters called 'period1' and 'period1' as timeStamps values.
+				queryStringParameters.Add(nameof(period1), period1);
+				queryStringParameters.Add(nameof(period2), period2);
+			}
+			else
+			{
+				// When there is no definition for Start/Finish dates.
+				// We can must use the Period property which is available on the enumerator YPeriod.
+				// Get the valida format for periods.
+				var range = YUtils.GetPeriod(Period);
 
-            // Add the interval based on Interval property.
-            var interval = YUtils.GetInterval(Interval == Interval.ThirtyMinutes ? Interval.FifteenMinutes : Interval);
+				// Use the range parameter.
+				queryStringParameters.Add(nameof(range), range);
+			}
 
-            // Use the interval parameter.
-            queryStringParameters.Add(nameof(interval), interval);
-            // queryStringParameters.Add("includePrePost", false);
+			// Add the interval based on Interval property.
+			var interval = YUtils.GetInterval(Interval == Interval.ThirtyMinutes ? Interval.FifteenMinutes : Interval);
 
-            var events = new List<string>();
+			// Use the interval parameter.
+			queryStringParameters.Add(nameof(interval), interval);
+			// queryStringParameters.Add("includePrePost", false);
 
-            if (Dividends) events.Add("div");
-            if (Splits) events.Add("splits");
+			var events = new List<string>();
 
-            if (events.Any())
-            {
-                queryStringParameters.Add("events", string.Join(",", events));
-            }
+			if (Dividends) events.Add("div");
+			if (Splits) events.Add("splits");
 
-            // build the queryString parameters.
-            var queryString = string.Join("&", queryStringParameters.Select(x => $"{x.Key}={x.Value}"));
+			if (events.Any())
+			{
+				queryStringParameters.Add("events", string.Join(",", events));
+			}
 
-            // Build the 'url' to request.
-            var url = $"{YUtils.BaseUrl}/v8/finance/chart/{Symbol}?{queryString}";
+			// build the queryString parameters.
+			var queryString = string.Join("&", queryStringParameters.Select(x => $"{x.Key}={x.Value}"));
 
-            // Make a http get request to the url.
-            var http = new HttpClient();
-            var response = await http.GetAsync(url);
+			// Build the 'url' to request.
+			var url = $"{YUtils.BaseUrl}/v8/finance/chart/{Symbol}?{queryString}";
 
-            var responseBody = await response.Content.ReadAsStringAsync();
+			// Make a http get request to the url.
+			var http = new HttpClient();
+			var response = await http.GetAsync(url);
 
-            YResponse yResponse = null;
+			var responseBody = await response.Content.ReadAsStringAsync();
 
-            if (!string.IsNullOrWhiteSpace(responseBody))
-                yResponse = JsonConvert.DeserializeObject<YResponse>(responseBody);
+			YResponse yResponse = null;
 
-            if (!response.IsSuccessStatusCode || yResponse == null)
-            {
-                var error = yResponse?.Chart?.Error;
+			if (!string.IsNullOrWhiteSpace(responseBody))
+				yResponse = JsonConvert.DeserializeObject<YResponse>(responseBody);
 
-                string code = "Fynance.Yahoo";
-                string message = "This result was not possible to get from Yahoo Finance.";
+			if (!response.IsSuccessStatusCode || yResponse == null)
+			{
+				var error = yResponse?.Chart?.Error;
 
-                if (error != null)
-                {
-                    code = error.Code;
-                    message = error.Description;
-                }
+				string code = "Fynance.Yahoo";
+				string message = "This result was not possible to get from Yahoo Finance.";
 
-                throw new FynanceException(code, message)
-                {
-                    Symbol = this.Symbol,
-                    Period = this.Period,
-                    Interval = this.Interval,
-                    StatusCode = response.StatusCode
-                };
-            }
+				if (error != null)
+				{
+					code = error.Code;
+					message = error.Description;
+				}
 
-            try
-            {
-                Result = yResponse.GetResult(this.TimeZone);
-            }
-            catch (Exception ex)
-            {
-                throw new FynanceException("Fynance.Yahoo", "An error occurred while trying to fetch the results. Please, check the InnerException for more details.", ex);
-            }
+				throw new FynanceException(code, message)
+				{
+					Symbol = this.Symbol,
+					Period = this.Period,
+					Interval = this.Interval,
+					StatusCode = response.StatusCode
+				};
+			}
 
-            return Result;
-        }
+			try
+			{
+				Result = yResponse.GetResult(this.TimeZone);
+			}
+			catch (Exception ex)
+			{
+				throw new FynanceException("Fynance.Yahoo", "An error occurred while trying to fetch the results. Please, check the InnerException for more details.", ex);
+			}
 
-        #endregion
-    }
+			return Result;
+		}
+
+		#endregion
+	}
 }
