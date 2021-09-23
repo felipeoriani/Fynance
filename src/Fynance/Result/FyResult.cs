@@ -42,6 +42,49 @@ namespace Fynance.Result
 
 		public FyDividend[] Dividends { get; set; }
 
-		public FySplit[] Splits { get; set; }
-	}
+        public FySplit[] Splits { get; set; }
+        
+        public void Clear()
+        {
+            this.Currency = null;
+
+            this.Symbol = null;
+
+            this.ExchangeName = null;
+
+            this.InstrumentType = null;
+
+            this.FirstTradeDate = null;
+
+            this.RegularMarketTime = null;
+
+            this.GMTOffSet = new int();
+
+            this.TimeZone = null;
+
+            this.ExchangeTimezoneName = null;
+
+            this.RegularMarketPrice = new double();
+
+            this.ChartPreviousClose = new double();
+
+            this.PreviousClose = new double();
+
+            this.Scale = new int();
+
+            this.PriceHint = new double();
+
+            this.DataGranularity = new Interval();
+
+            this.Range = new Period();
+
+            this.ValidRanges = null;
+
+            this.Quotes = null;
+
+            this.Dividends = null;
+
+            this.Splits = null;
+        }
+    }
 }
