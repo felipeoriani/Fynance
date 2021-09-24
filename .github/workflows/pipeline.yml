@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
+defaults:
+  run:
+    working-directory: ./src
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,9 +19,18 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+
     - name: Install dependencies
-      run: cd ./src && dotnet restore
+      run: dotnet restore
+
     - name: Build
-      run: cd ./src && dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
+
     - name: Test
-      run: cd ./src && dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Create the Package
+      run: dotnet pack --configuration Release
+
+    - name: Publish Nuget
+      run: dotnet nuget push "./Fynance/bin/Release/*.nupkg" -k ${{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json
