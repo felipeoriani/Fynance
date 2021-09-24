@@ -80,7 +80,9 @@
 
 		private async Task<HttpResponseMessage> GetResponse(string url)
 		{
-			using (var http = new HttpClient())
+			var handler = new HttpClientHandler();
+			handler.UseProxy = false;
+			using (var http = new HttpClient(handler))
 			{
 				return await http.GetAsync(url).ConfigureAwait(false);
 			}
