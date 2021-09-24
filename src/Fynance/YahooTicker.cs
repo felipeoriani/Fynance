@@ -14,6 +14,8 @@
 	/// </summary>
 	public class YahooTicker : Ticker
 	{
+		private HttpClient _client;
+
 		#region [ctor]
 
 		public YahooTicker() { }
@@ -21,6 +23,16 @@
 		public YahooTicker(string symbol)
 			: base(symbol)
 		{
+		}
+
+		public YahooTicker(HttpClient client) { 
+			_client = client;
+		}
+
+		public YahooTicker(string symbol, HttpClient client)
+			: base(symbol)
+		{
+			_client=client;
 		}
 
 		#endregion
@@ -78,9 +90,19 @@
 			return Result;
 		}
 
+		public void SetHttpClient(HttpClient client) {
+			_client = client;
+		}
+
 		private async Task<HttpResponseMessage> GetResponse(string url)
 		{
-			using (var http = new HttpClient())
+			if(_client != null) {
+				return await _client.GetAsync(url).ConfigureAwait(false);
+			}
+
+			var handler = new HttpClientHandler();
+			handler.UseProxy = false;
+			using (var http = new HttpClient(handler))
 			{
 				return await http.GetAsync(url).ConfigureAwait(false);
 			}
