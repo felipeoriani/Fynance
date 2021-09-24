@@ -134,7 +134,7 @@ namespace Fynance.Tests
 			var startDate = new DateTime(2020, 1, 1);
 			var finishDate = new DateTime(2020, 5, 31);
 
-			var result = Ticker.Build().SetInterval(startDate, finishDate);
+			var result = Ticker.Build().SetPeriod(startDate, finishDate);
 
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.StartDate, startDate);
