@@ -56,36 +56,36 @@ namespace Fynance.Tests
 			Assert.IsNotNull(result.Dividends);
 		}
 
-        [TestMethod]
-        public async Task When_ticker_never_trade_should_not_error()
-        {
-            var result = await Ticker.Build("IP-WI").GetAsync();
-            Assert.IsNotNull(result);
-        }
+		[TestMethod]
+		public async Task When_ticker_never_trade_should_not_error()
+		{
+			var result = await Ticker.Build("IP-WI").GetAsync();
+			Assert.IsNotNull(result);
+		}
 
-        [TestMethod]
-        public void Should_download_ticker_data_from_yahoo_finance_by_start_finish_date_today()
-        {
+		[TestMethod]
+		public void Should_download_ticker_data_from_yahoo_finance_by_start_finish_date_today()
+		{
 			const string symbol = "ABEV3.SA";
 
-            var ticker = Ticker.Build()
-                .SetSymbol(symbol)
-                .SetStartDate(new DateTime(2019, 1, 1))
-                .SetFinishDate(DateTime.UtcNow)
-                .SetInterval(Interval.OneDay)
-                .SetEvents(true);
+			var ticker = Ticker.Build()
+				.SetSymbol(symbol)
+				.SetStartDate(new DateTime(2019, 1, 1))
+				.SetFinishDate(DateTime.UtcNow)
+				.SetInterval(Interval.OneDay)
+				.SetEvents(true);
 
-            var result = ticker.Get();
+			var result = ticker.Get();
 
-            Assert.IsNotNull(ticker.Result);
-            Assert.IsNotNull(result);
+			Assert.IsNotNull(ticker.Result);
+			Assert.IsNotNull(result);
 
-            Assert.AreEqual(result.Symbol, symbol);
+			Assert.AreEqual(result.Symbol, symbol);
 
-            Assert.IsNotNull(result.Quotes);
-            Assert.IsTrue(result.Quotes.Length > 0);
+			Assert.IsNotNull(result.Quotes);
+			Assert.IsTrue(result.Quotes.Length > 0);
 
-            Assert.IsNotNull(result.Dividends);
+			Assert.IsNotNull(result.Dividends);
 		}
 
 		[TestMethod]

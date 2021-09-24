@@ -114,9 +114,9 @@
 			var ohlc = resultResponse.Indicators.Quote.First();
 
 			var timestamps = resultResponse.TimeStamp;
-            var quotes = new List<FyQuote>();
+			var quotes = new List<FyQuote>();
 			if (timestamps == null)
-                return quotes.ToArray();
+				return quotes.ToArray();
 
 			var dateTimes = timestamps.Select(x => x.HasValue ? GetDateFromTimestamp(x.Value) : null as DateTime?).ToList();
 
