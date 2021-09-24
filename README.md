@@ -93,13 +93,13 @@ Reading all the *OLHC* history:
 foreach (var item in result.Quotes)
 {
    var period = item.Period; // DateTime
-   var open = item.Open; // Double 
-   var low = item.Low; // Double 
-   var high = item.High; // Double 
-   var close = item.Close; // Double 
-   var close = item.Close; // Double 
-   var adjClose = item.AdjClose; // Double 
-   var volume = item.Volume; // Double 
+   var open = item.Open; // Decimal
+   var low = item.Low; // Decimal
+   var high = item.High; // Decimal 
+   var close = item.Close; // Decimal 
+   var close = item.Close; // Decimal 
+   var adjClose = item.AdjClose; // Decimal 
+   var volume = item.Volume; // Decimal
 }
 ```
 
@@ -109,7 +109,7 @@ Reading the dividends:
 foreach (var item in result.Dividends)
 {
    var date = item.Date; // DateTime: Payment date 
-   var value = item.value; // Double: Payment value
+   var value = item.value; // Decimal: Payment value
 }
 ```
 
@@ -118,9 +118,9 @@ Reading the splits:
 ```c#
 foreach (var item in result.Splits)
 {
-   var date = item.Date; // DateTime: Date 
-   var numerator = item.Numberator; // Double: Numerator of splits
-   var denominator = item.Denominator; // Double: Denominator of split
+   var date = item.Date; // DateTime: Event Date 
+   var numerator = item.Numberator; // Decimal: Numerator of splits
+   var denominator = item.Denominator; // Decimal: Denominator of split
 }
 ```
 
@@ -128,6 +128,10 @@ foreach (var item in result.Splits)
 ### Issue Reports
 
 If you find any issue, please report them using the [GitHub issue tracker](https://github.com/felipeoriani/Fynance/issues). Would be great if you provide a sample of code or a repository with a sample project.
+
+### Contributions
+
+Contributions are welcome, feel free to fork the repository and send a pull request with your changes to contribute with the package.
 
 ### Licenses
 
