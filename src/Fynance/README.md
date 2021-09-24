@@ -51,7 +51,7 @@ using Fynance;
 
 The *Fynance* implements a fluent interface to read data from a stock market api. Given it, a instance of `Ticker` is a representation of a security on the stock market. Then you can make an instance of `Ticker` and use all the methods to configure what you want to have until call the `Get` method. There is a `async` version of this method called `GetAsync`. The following code is a sample of use:
 
-```
+```c#
 var result = await Ticker.Build()
                          .SetSymbol("MSFT")
                          .SetPeriod(Period.OneMonth)
@@ -62,7 +62,7 @@ var result = await Ticker.Build()
 The `Build` method instance the `Ticker` object and all these `Set` methods configure what information you want to get from the available APIs.
 
 To the the *events* as we call *dividends* or *splits* you can use `SetDividends` and `SetEvents` to define it:
-```
+```c#
 var result = await Ticker.Build()
                          .SetSymbol("MSFT")
                          .SetPeriod(Period.OneMonth)
@@ -80,7 +80,7 @@ When you call the `Get` methods, you get a instance of `FyResult`. It contains a
 
 There are many information you can read from the security, see some samples available:
 
-```
+```c#
 var currenty = result.Currency;
 var symbol = result.Symbol;
 var symbol = result.ExchangeName;
@@ -88,7 +88,7 @@ var symbol = result.ExchangeName;
    
 Reading all the *OLHC* history:
 
-```
+```c#
 foreach (var item in result.Quotes)
 {
    var period = item.Period; // DateTime
@@ -104,7 +104,7 @@ foreach (var item in result.Quotes)
 
 Reading the dividends:
 
-```
+```c#
 foreach (var item in result.Dividends)
 {
    var date = item.Date; // DateTime: Payment date 
@@ -114,7 +114,7 @@ foreach (var item in result.Dividends)
 
 Reading the splits:
 
-```
+```c#
 foreach (var item in result.Splits)
 {
    var date = item.Date; // DateTime: Date 
