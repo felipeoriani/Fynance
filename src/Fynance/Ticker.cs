@@ -111,12 +111,12 @@
 		}
 
 		/// <summary>
-		/// Set Period between two dates.
+		/// Set interval between two dates.
 		/// </summary>
 		/// <param name="startDate">Start date.</param>
 		/// <param name="finishDate">Finish date.</param>
 		/// <returns>The instance itself.</returns>
-		public virtual Ticker SetPeriod(DateTime startDate, DateTime finishDate)
+		public virtual Ticker SetInterval(DateTime startDate, DateTime finishDate)
 			=> SetStartDate(startDate).SetFinishDate(finishDate);
 
 		/// <summary>
