@@ -105,8 +105,8 @@
 				if (StartDate > FinishDate)
 					throw new ArgumentOutOfRangeException("StartDate", "The StartDate can not be greater than FinishDate.");
 
-				var period1 = YUtils.GetTimestampFromDateTime(StartDate.Value);
-				var period2 = YUtils.GetTimestampFromDateTime(FinishDate.Value);
+				var period1 = (long)YUtils.GetTimestampFromDateTime(StartDate.Value);
+				var period2 = (long)YUtils.GetTimestampFromDateTime(FinishDate.Value);
 
 				// YahooFinance expect two parameters called 'period1' and 'period1' as timeStamps values.
 				queryStringParameters.Add(nameof(period1), period1);
