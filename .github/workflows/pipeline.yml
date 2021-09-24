@@ -29,8 +29,8 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
 
-    - name: Create the Package
-      run: dotnet pack --configuration Release
+#    - name: Create the Package
+#      run: dotnet pack --configuration Release
 
-    - name: Publish Nuget
-      run: dotnet nuget push "Fynance/bin/Release/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }}  --skip-duplicate --source "https://api.nuget.org/v3/index.json"
+#    - name: Publish Nuget
+#      run: dotnet nuget push "Fynance/bin/Release/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }}  --skip-duplicate --source "https://api.nuget.org/v3/index.json"
