@@ -21,7 +21,7 @@
 		public int? FirstTradeDate { get; set; }
 
 		[JsonProperty("regularMarketTime")]
-		public int RegularMarketTime { get; set; }
+		public int? RegularMarketTime { get; set; }
 
 		[JsonProperty("gmtoffset")]
 		public int GMTOffSet { get; set; }
@@ -33,16 +33,16 @@
 		public string ExchangeTimezoneName { get; set; }
 
 		[JsonProperty("regularMarketPrice")]
-		public decimal RegularMarketPrice { get; set; }
+		public decimal? RegularMarketPrice { get; set; }
 
 		[JsonProperty("chartPreviousClose")]
-		public decimal ChartPreviousClose { get; set; }
+		public decimal? ChartPreviousClose { get; set; }
 
 		[JsonProperty("previousClose")]
-		public decimal PreviousClose { get; set; }
+		public decimal? PreviousClose { get; set; }
 
 		[JsonProperty("scale")]
-		public int Scale { get; set; }
+		public int? Scale { get; set; }
 
 		[JsonProperty("priceHint")]
 		public double PriceHint { get; set; }

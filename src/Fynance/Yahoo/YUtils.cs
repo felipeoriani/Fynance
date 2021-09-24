@@ -114,11 +114,15 @@
 			var ohlc = resultResponse.Indicators.Quote.First();
 
 			var timestamps = resultResponse.TimeStamp;
+			var quotes = new List<FyQuote>();
+			if (timestamps == null)
+				return quotes.ToArray();
+
 			var dateTimes = timestamps.Select(x => x.HasValue ? GetDateFromTimestamp(x.Value) : null as DateTime?).ToList();
 
 			var adjClose = resultResponse.Indicators.AdjClose?.FirstOrDefault()?.AdjClose ?? ohlc.Close;
 
-			var quotes = new List<FyQuote>();
+		
 			for (int i = 0; i < dateTimes.Count; i++)
 			{
 				if (dateTimes[i] == null ||
