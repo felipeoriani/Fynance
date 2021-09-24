@@ -25,13 +25,13 @@
 
 		public string ExchangeTimezoneName { get; set; }
 
-		public decimal RegularMarketPrice { get; set; }
+		public decimal? RegularMarketPrice { get; set; }
 
-		public decimal ChartPreviousClose { get; set; }
+		public decimal? ChartPreviousClose { get; set; }
 
-		public decimal PreviousClose { get; set; }
+		public decimal? PreviousClose { get; set; }
 
-		public int Scale { get; set; }
+		public int? Scale { get; set; }
 
 		public double PriceHint { get; set; }
 

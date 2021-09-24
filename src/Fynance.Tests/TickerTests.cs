@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Fynance.Tests
@@ -54,6 +55,13 @@ namespace Fynance.Tests
 
 			Assert.IsNotNull(result.Dividends);
 		}
+
+        [TestMethod]
+        public async Task When_ticker_never_trade_should_not_error()
+        {
+            var result = await Ticker.Build("IP-WI").GetAsync();
+            Assert.IsNotNull(result);
+        }
 
 		[TestMethod]
 		public void Should_define_a_ticker()
