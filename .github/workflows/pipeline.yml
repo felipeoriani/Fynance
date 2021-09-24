@@ -33,4 +33,4 @@ jobs:
       run: dotnet pack --configuration Release
 
     - name: Publish Nuget
-      run: dotnet nuget push "./Fynance/bin/Release/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      run: dotnet nuget push "Fynance/bin/Release/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
