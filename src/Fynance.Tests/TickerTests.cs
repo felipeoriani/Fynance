@@ -89,6 +89,38 @@ namespace Fynance.Tests
 		}
 
 		[TestMethod]
+		public void Splits_Should_not_be_null_when_requested()
+		{
+			const string symbol = "PSPC";
+		
+			var ticker = Ticker.Build()
+				.SetSymbol(symbol)
+				.SetStartDate(new DateTime(2020, 1, 1))
+				.SetFinishDate(new DateTime(2021, 12, 1))
+				.SetInterval(Interval.OneDay)
+				.SetSplits(true);
+		
+			var result = ticker.Get();
+			Assert.IsNotNull(result.Splits);
+		}
+
+		[TestMethod]
+		public void Dividends_Should_not_be_null_when_requested()
+		{
+			const string symbol = "PSPC";
+
+			var ticker = Ticker.Build()
+				.SetSymbol(symbol)
+				.SetStartDate(new DateTime(2020, 1, 1))
+				.SetFinishDate(new DateTime(2021, 12, 1))
+				.SetInterval(Interval.OneDay)
+				.SetDividends(true);
+
+			var result = ticker.Get();
+			Assert.IsNotNull(result.Dividends);
+		}
+
+		[TestMethod]
 		public void Should_define_a_ticker()
 		{
 			var result = Ticker.Build("GOOG");
