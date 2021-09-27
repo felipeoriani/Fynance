@@ -81,6 +81,14 @@
 			try
 			{
 				Result = yResponse.GetResult(this.TimeZone);
+				if (Splits)
+				{
+					Result.Splits = Result.Splits ?? new FySplit[0];
+				}
+				if (Dividends)
+				{
+					Result.Dividends = Result.Dividends ?? new FyDividend[0];
+				}
 			}
 			catch (Exception ex)
 			{
