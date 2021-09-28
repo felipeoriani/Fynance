@@ -12,50 +12,58 @@
 	/// <summary>
 	/// Implementation of Ticker for Yahoo Finance.
 	/// </summary>
-	public class YahooTicker : Ticker
+	public class YahooTicker : Ticker, IDisposable
 	{
-		private HttpClient _client;
-
 		#region [ctor]
 
-		public YahooTicker() { }
+		public YahooTicker() 
+		{
+		}
 
 		public YahooTicker(string symbol)
 			: base(symbol)
 		{
 		}
 
-		public YahooTicker(HttpClient client) { 
-			_client = client;
+		public YahooTicker(HttpClient client)
+		{
+			Client = client;
 		}
 
 		public YahooTicker(string symbol, HttpClient client)
 			: base(symbol)
 		{
-			_client=client;
+			Client = client;
 		}
 
 		#endregion
 
 		#region [Methods]
 
+		/// <inheritdoc />
 		public override async Task<FyResult> GetAsync()
 		{
+			// Get the query string argumentrs for the yahoo finance route.
 			var queryString = GetQueryStringParameters();
 
+			// Build the full route.
 			var url = $"{YUtils.BaseUrl}/v8/finance/chart/{Symbol}?{queryString}";
 
+			// Get the http response from the http call on the given route.
 			HttpResponseMessage response = await GetResponse(url).ConfigureAwait(false);
 
 			string responseBody = null;
-			if (response.IsSuccessStatusCode)
-				responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-			
 			YResponse yResponse = null;
 
+			// Read all the content whe the request succeed.
+			if (response.IsSuccessStatusCode)
+				responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+			// Deserialize all the content
 			if (!string.IsNullOrWhiteSpace(responseBody))
 				yResponse = JsonConvert.DeserializeObject<YResponse>(responseBody);
 
+			// When the http request does not succeed
 			if (!response.IsSuccessStatusCode || yResponse == null)
 			{
 				var error = yResponse?.Chart?.Error;
@@ -69,6 +77,7 @@
 					message = error.Description;
 				}
 
+				// Throw an exception for the current error
 				throw new FynanceException(code, message)
 				{
 					Symbol = this.Symbol,
@@ -80,11 +89,16 @@
 
 			try
 			{
-				Result = yResponse.GetResult(this.TimeZone);
+				// Once the request was performed fine, the results are prepared based on the TimeZone.
+				Result = yResponse.GetResult(TimeZone);
+
+				// Define the splits.
 				if (Splits)
 				{
 					Result.Splits = Result.Splits ?? new FySplit[0];
 				}
+
+				// Define the dividends.
 				if (Dividends)
 				{
 					Result.Dividends = Result.Dividends ?? new FyDividend[0];
@@ -98,29 +112,30 @@
 			return Result;
 		}
 
-		public void SetHttpClient(HttpClient client) {
-			_client = client;
-		}
-
+		/// <summary>
+		/// Get a http response message from the client instance.
+		/// </summary>
+		/// <param name="url">Url to invoke.</param>
+		/// <returns>An instance of HttpResponseMessage.</returns>
 		private async Task<HttpResponseMessage> GetResponse(string url)
 		{
-			if(_client != null) {
-				return await _client.GetAsync(url).ConfigureAwait(false);
+			if (Client == null)
+			{
+				Client = new HttpClient(new HttpClientHandler { UseProxy = false });
 			}
 
-			var handler = new HttpClientHandler();
-			handler.UseProxy = false;
-			using (var http = new HttpClient(handler))
-			{
-				return await http.GetAsync(url).ConfigureAwait(false);
-			}
+			return await Client.GetAsync(url).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		/// Prepare the query string arguments for Yahoo Finance request.
+		/// </summary>
+		/// <returns>An url with all containing arguments.</returns>
 		private string GetQueryStringParameters()
 		{
 			var queryStringParameters = new Dictionary<string, object>();
 
-			// If there are definitions for 'StartDate' or 'FinishDate' then use it as arguments.
+			// When there are definitions for 'StartDate' or 'FinishDate' then use it as arguments.
 			if (StartDate != null || FinishDate != null)
 			{
 				// Set default timestamp for 'StartDate' when it is not defined.
@@ -135,8 +150,8 @@
 				if (StartDate > FinishDate)
 					throw new ArgumentOutOfRangeException("StartDate", "The StartDate can not be greater than FinishDate.");
 
-				var period1 = (long)YUtils.GetTimestampFromDateTime(StartDate.Value);
-				var period2 = (long)YUtils.GetTimestampFromDateTime(FinishDate.Value);
+				var period1 = (long) YUtils.GetTimestampFromDateTime(StartDate.Value);
+				var period2 = (long) YUtils.GetTimestampFromDateTime(FinishDate.Value);
 
 				// YahooFinance expect two parameters called 'period1' and 'period1' as timeStamps values.
 				queryStringParameters.Add(nameof(period1), period1);
@@ -161,9 +176,11 @@
 
 			var events = new List<string>();
 
+			// Define events for dividends and splits.
 			if (Dividends) events.Add("div");
 			if (Splits) events.Add("splits");
 
+			// set the argumento for events when defined.
 			if (events.Any())
 			{
 				queryStringParameters.Add("events", string.Join(",", events));

@@ -1,6 +1,7 @@
 ﻿namespace Fynance
 {
 	using System;
+	using System.Net.Http;
 	using System.Threading;
 	using System.Threading.Tasks;
 	using Result;
@@ -10,9 +11,11 @@
 	/// This is an abstract fluent implementation to define how to get data from the stock market.
 	/// By default an instance of Ticker will use Period of one month, interval of days and TimeZoneInfo.Local.
 	/// </summary>
-	public abstract class Ticker
+	public abstract class Ticker : IDisposable
 	{
 		#region Properties
+
+		protected HttpClient Client { get; set; }
 
 		/// <summary>
 		/// Security symbol.
@@ -191,22 +194,61 @@
 		public virtual Ticker SetEvents(bool events)
 			=> SetDividends(events).SetSplits(events);
 
-		public FyResult Get()
+		public virtual Ticker SetHttpClient(HttpClient client)
 		{
-			return _taskFactory.StartNew(GetAsync).Unwrap().GetAwaiter().GetResult();
+			if (Client != null)
+				Client.Dispose();
+
+			Client = client;
+
+			return this;
 		}
 
+		/// <summary>
+		/// Sync implementation to get the results from the predefined settings.
+		/// </summary>
+		/// <returns>An instance of FyResult containing the result.</returns>
+		public FyResult Get()
+			=> _taskFactory.StartNew(GetAsync).Unwrap().GetAwaiter().GetResult();
+
+		/// <summary>
+		/// Async implementation to get a result from the predefined settings.
+		/// </summary>
+		/// <returns>An instance of FyResult containing the result.</returns>
 		public abstract Task<FyResult> GetAsync();
+
+		/// <inheritdoc />
+		public void Dispose()
+		{
+			if (Client != null)
+				Client.Dispose();
+		}
 
 		#endregion
 
 		#region Static
 
+		/// <summary>
+		/// Build an instance of the Ticker.
+		/// Currently this package just support <see cref="YahooTicker"/> implementation.
+		/// </summary>
+		/// <returns>An instance of the <see cref="Ticker"/>.</returns>
 		public static Ticker Build() => new YahooTicker();
 
-		public static Ticker Build(string ticker) => new YahooTicker(ticker);
+		/// <summary>
+		/// Build an instance of the Ticker for a given symbol.
+		/// Currently this package just support <see cref="YahooTicker"/> implementation.
+		/// </summary>
+		/// <param name="symbol">Symbol</param>
+		/// <returns>An instance of the <see cref="Ticker"/>.</returns>
+		public static Ticker Build(string symbol) => new YahooTicker(symbol);
 
-		public static Ticker BuildYahoo(string ticker) => new YahooTicker(ticker);
+		/// <summary>
+		/// Build an instance of the <see cref="YahooTicker"/> for a given symbol.
+		/// </summary>
+		/// <param name="symbol"></param>
+		/// <returns>An instance of the <see cref="Ticker"/>.</returns>
+		public static Ticker BuildYahoo(string symbol) => new YahooTicker(symbol);
 
 		private static readonly TaskFactory _taskFactory = new TaskFactory(CancellationToken.None,
 			TaskCreationOptions.None,
