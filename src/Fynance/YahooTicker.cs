@@ -121,7 +121,7 @@
 
 				// Set current datetime for' FinishDate' when it is not defined.
 				if (FinishDate == null)
-					FinishDate = DateTime.Now;
+					FinishDate = DateTime.UtcNow;
 
 				// Validate the Start/Finish interval.
 				if (StartDate > FinishDate)
