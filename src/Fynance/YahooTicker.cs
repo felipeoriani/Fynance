@@ -64,10 +64,9 @@
 				yResponse = JsonConvert.DeserializeObject<YResponse>(responseBody);
 
 			// When the http request does not succeed
-			if (!response.IsSuccessStatusCode || yResponse == null)
+			var error = yResponse?.Chart?.Error;
+			if (!response.IsSuccessStatusCode || yResponse == null || error != null)
 			{
-				var error = yResponse?.Chart?.Error;
-
 				string code = "Fynance.Yahoo";
 				string message = "This result was not possible to get from Yahoo Finance.";
 
