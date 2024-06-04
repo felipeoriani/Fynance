@@ -121,6 +121,7 @@
 			if (Client == null)
 			{
 				Client = new HttpClient(new HttpClientHandler { UseProxy = false });
+                 	        Client.DefaultRequestHeaders.Add("User-Agent", "Fynance");
 			}
 
 			return await Client.GetAsync(url).ConfigureAwait(false);
