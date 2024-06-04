@@ -6,7 +6,7 @@
 
 <div align="center">
 
-[![Build Status](https://img.shields.io/github/workflow/status/felipeoriani/Fynance/Build)](https://img.shields.io/github/workflow/status/felipeoriani/Fynance/Build)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/felipeoriani/Fynance/.github/workflows/pipeline.yml?branch=main)](https://img.shields.io/github/actions/workflow/status/felipeoriani/Fynance/.github/workflows/pipeline.yml?branch=main)
 
 [![NuGet](https://img.shields.io/nuget/v/fynance.svg)](https://www.nuget.org/packages/Fynance)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Fynance.svg)](https://www.nuget.org/packages/Fynance)
