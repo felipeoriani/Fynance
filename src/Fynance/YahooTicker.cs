@@ -16,6 +16,8 @@
 	{
 		#region [ctor]
 
+		private const string UserAgentKey = "user-agent";
+
 		public YahooTicker() 
 		{
 		}
@@ -123,7 +125,12 @@
 				Client = new HttpClient(new HttpClientHandler { UseProxy = false });
 			}
 
-			return await Client.GetAsync(url).ConfigureAwait(false);
+			if (Client.DefaultRequestHeaders.Contains(UserAgentKey))
+				Client.DefaultRequestHeaders.Remove(UserAgentKey);
+
+            Client.DefaultRequestHeaders.Add(UserAgentKey, this.UserAgent);
+
+            return await Client.GetAsync(url).ConfigureAwait(false);
 		}
 
 		/// <summary>

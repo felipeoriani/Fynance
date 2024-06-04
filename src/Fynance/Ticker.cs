@@ -62,6 +62,11 @@
 		/// </summary>
 		public FyResult Result { get; protected set; }
 
+		/// <summary>
+		/// It contains the information about the user-agent http request header. The default value is fynance, but you can set your own application.
+		/// </summary>
+		public string UserAgent { get; protected set; } = "fynance";
+
 		#endregion
 
 		#region Construtors
@@ -201,6 +206,12 @@
 
 			Client = client;
 
+			return this;
+		}
+
+		public virtual Ticker SetUserAgent(string userAgent)
+		{
+			this.UserAgent = userAgent;
 			return this;
 		}
 
