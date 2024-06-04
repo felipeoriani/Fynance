@@ -1,4 +1,4 @@
-name: Build
+name: Fynance
 
 on:
   push:
@@ -7,10 +7,6 @@ on:
   pull_request:
     branches:
       - main
-
-defaults:
-  run:
-    working-directory: ./src
 
 jobs:
   build:
@@ -27,14 +23,18 @@ jobs:
 
       - name: Install dependencies
         run: dotnet restore
+        working-directory: ./src
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
+        working-directory: ./src
 
       - name: Test
         run: dotnet test --no-restore --verbosity normal --configuration Release
+        working-directory: ./src
 
       - name: Create NuGet package
         run: dotnet pack --configuration Release --no-build --output ./nupkg
+        working-directory: ./src
 #      - name: Publish Nuget
 #        run: dotnet nuget push ./Fynance/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate --source "https://api.nuget.org/v3/index.json"
