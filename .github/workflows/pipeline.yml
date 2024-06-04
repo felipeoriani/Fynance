@@ -15,7 +15,8 @@ jobs:
       DOTNET_VERSION: 3.1.101
     steps:
       - name: Checkout code
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
